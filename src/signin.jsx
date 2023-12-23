@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios"; // Make sure to import axios
-
+import axios from "axios"; 
+import { useNavigate } from "react-router-dom";
 import logo from "./logo.png";
 import { APISignIN } from "./api.Router";
 import { redirect } from "react-router-dom";
 
 function SignInForm() {
+  const navigate = useNavigate();
   const [state, setState] = useState({
     email: "",
     password: ""
@@ -27,9 +28,11 @@ function SignInForm() {
   )
     .then((response) => {
       console.log("response---------",response);
-      // if (response.data.success) {
-      //   redirect("/dashbord"); // Corrected typo in "dashboard"
-      // }
+      if (response.data.success) {
+        navigate("/dashbord");
+      }else {
+        alert("Incorrect password. Please try again.");
+      }
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -54,7 +57,7 @@ function SignInForm() {
         <span className="font-medium text-sm">or use your account</span>
         <input
           className="inputh"
-          type="String"
+          type="text"
           placeholder="User Name"
           name="email"
           value={state.email}
