@@ -30,7 +30,7 @@ const productData = [
   },
   {
     id: 4,
-    productName: "Breke Shoe",
+    productName: "Brak Shoe",
     productImage: "https://cdn.discordapp.com/attachments/992120404338556988/1186006461562757204/p1_1.png?ex=6591ad97&is=657f3897&hm=ee7c4cfdf057abaeb5db4e73b6886d90ca6cc21f06d4e6056d0e4925e64af5ad&",
     subParts: ["Hero Honda", "Honda", "TVS", "Yamaha", "Bajaj"],
   },

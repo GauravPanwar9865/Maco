@@ -26,7 +26,7 @@ function Navbar() {
         </div>
 
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 text-xl border-solid transform scaleY-1 transition duration-300 ">
-          <Link to="/dashboard" className="text-white hover:border-t-2  hover:border-b-2   hover:border-red-400">
+          <Link to="/dashbord" className="text-white hover:border-t-2  hover:border-b-2   hover:border-red-400">
             DASHBOARD
           </Link>
           <Link to="/cart" className="text-white hover:border-t-2  hover:border-b-2  hover:border-red-400">
@@ -38,7 +38,7 @@ function Navbar() {
           <Link to="/track" className="text-white hover:border-t-2  hover:border-b-2  hover:border-red-400">
             TRACK SUPPLY
           </Link>
-          <Link to="/contact" className="text-white hover:border-t-2  hover:border-b-2  hover:border-red-400">
+          <Link to="/contant" className="text-white hover:border-t-2  hover:border-b-2  hover:border-red-400">
             CONTACT
           </Link>
         </div>

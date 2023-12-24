@@ -130,7 +130,7 @@ function ManageOrder() {
             </div>
           </div>
 
-          <section className="shadow-2xl mt-32 h-[65%] w-[90%] ml-[-114%] flex rounded-lg bg-neutral-500 opacity-90  "></section>
+          <section className="shadow-2xl mt-[10%] h-[65%] w-[90%] ml-[-97%] flex rounded-lg bg-neutral-500 opacity-90  "></section>
           
         </section>
       </div>

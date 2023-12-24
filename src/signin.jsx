@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios"; 
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import logo from "./logo.png";
 import { APISignIN } from "./api.Router";
-import { redirect } from "react-router-dom";
 
 function SignInForm() {
   const navigate = useNavigate();
@@ -18,27 +17,40 @@ function SignInForm() {
       email: state.email,
       password: state.password
     };
-    console.log("-----------------", {userName: userData.email,password: userData.password})
-    axios.post(`${APISignIN}`,
-    {
-      userName: userData.email,
-      password: userData.password
-    },
-    { withCredentials: true }
-  )
-    .then((response) => {
-      console.log("response---------",response);
-      if (response.data.success) {
-        navigate("/dashbord");
-      }else {
-        alert("Incorrect password. Please try again.");
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
   
-  }
+    console.log("Submitting with data:", userData);
+  
+    axios
+      .post(
+        `${APISignIN}`,
+        {
+          userName: userData.email,
+          password: userData.password
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log("Response from server:", response);
+  
+        if (response.data && response.data.success) {
+          navigate("/dashbord");
+        } else {
+          alert("Incorrect username or password. Please try again.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+  
+        if (error.response) {
+          console.log("Error response:", error.response);
+          if (error.response.status === 401) {
+            alert("Incorrect username or password. Please try again.");
+          }
+        }
+      });
+  };
+  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setState((prevState) => ({
@@ -48,8 +60,8 @@ function SignInForm() {
   };
 
   return (
-    <div className="form-container sign-in-container ">
-      <div className="flex items-center mt-8 justify-center ">
+    <div className="form-container sign-in-container">
+      <div className="flex items-center mt-8 justify-center">
         <img src={logo} alt="Logo" className="logo h-30 w-auto p-0" />
       </div>
       <form className="formh" onSubmit={handleSubmit}>
@@ -81,6 +93,5 @@ function SignInForm() {
     </div>
   );
 }
-
 
 export default SignInForm;

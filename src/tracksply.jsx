@@ -106,7 +106,7 @@ function Tracksply() {
               </form>
             </div>
           </div>
-          <section className="shadow-2xl mt-32 h-[65%] w-[90%] ml-[-72%] flex rounded-md  "></section>
+          <section className="shadow-2xl mt-[10%] h-[65%] w-[90%] ml-[-66%] flex rounded-md  "></section>
           <div className=" absolute mt-[30.5%] ml-[35%]">
             <button className="flex text-white bg-yellow-400 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-1.5 me-2 mb-4 ml- dark:bg-yellow-200 focus:outline-none dark:focus:ring-yellow-800 transform transition-transform duration-300">
               EXPORT LIST
