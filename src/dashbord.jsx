@@ -41,6 +41,10 @@ function DASHBOARD() {
           </div>
         </div>
       </div>
+      {/* ........................................................................... */}
+      <div className="h-8 text-center bg-gray-200 text-gray-700 text-xl font-bold leading-1">
+        Design by Bytebulls
+      </div>
     </>
   );
 }

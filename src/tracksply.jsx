@@ -52,7 +52,8 @@ function Tracksply() {
     <>
       <div
         className="bg-cover bg-center h-screen  font-abc"
-        style={{ backgroundImage: `url(${backgroundImage})` }}>
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      >
         <Navbar />
         <section className="bg-gradient-to-r from-neutral-400 to-neutral-600 opacity-95 rounded-2xl shadow-2xl ml-[10%] h-[70%] mt-16 w-[80%] flex ">
           <div className="row  ml-[38%]  thight flex ">
@@ -92,8 +93,6 @@ function Tracksply() {
                   <div className="row mb-4 flex">
                     <label className="col-sm-2 col-form-label"></label>
                     <div className="col-sm-5 flex">
-
-                      
                       <button className="flex ml-5 text-white bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium absolute rounded-full text-sm px-2 py-1.5 me-2 mb-2 dark:bg-blue-600 focus:outline-none dark:focus:ring-blue-800 transform transition-transform duration-300">
                         Submit
                       </button>
@@ -113,6 +112,10 @@ function Tracksply() {
             </button>
           </div>
         </section>
+      </div>
+      {/* ........................................................................... */}
+      <div className="h-8 text-center bg-gray-200 text-gray-700 text-xl font-bold leading-1">
+        Design by Bytebulls
       </div>
     </>
   );
