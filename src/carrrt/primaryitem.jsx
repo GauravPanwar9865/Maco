@@ -12,9 +12,14 @@ const PrimaryItem = ({ isModalOpen, closeModel, productName, subParts }) => {
   const [showTable, setShowTable] = useState(false);
 
   const options = [
-    { label: "#", value: 1 },
-    { label: "#", value: 2 },
-    { label: "#", value: 3 },
+    { label: "abc", value: 1 },
+    { label: "cde", value: 2 },
+    { label: "fgh", value: 3 },
+    { label: "hij", value: 4 },
+    { label: "jlk", value: 5 },
+    { label: "mno", value: 6 },
+    { label: "pqr", value: 7 },
+    { label: "stu", value: 8 },
   ];
 
   const items = [
@@ -257,9 +262,15 @@ const PrimaryItem = ({ isModalOpen, closeModel, productName, subParts }) => {
                           />
                         </td>
                         <td className="border border-gray-300">{index + 1}</td>
-                        <td className="border border-gray-300">{item.itemId}</td>
-                        <td className="border border-gray-300">{item.itemName}</td>
-                        <td className="border border-gray-300">{item.itemPrice}</td>
+                        <td className="border border-gray-300">
+                          {item.itemId}
+                        </td>
+                        <td className="border border-gray-300">
+                          {item.itemName}
+                        </td>
+                        <td className="border border-gray-300">
+                          {item.itemPrice}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
