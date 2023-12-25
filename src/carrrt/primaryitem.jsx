@@ -1,107 +1,129 @@
 import React, { useState } from "react";
 
-const PrimaryItem = ({ isModalOpen, closeModel, productName, subParts }) => {
+const PrimaryItem = ({ isModalOpen, closeModel, productName, subParts, subOptions }) => {
   const [selectedSubItem, setSelectedSubItem] = useState(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [value, setValue] = useState("");
   const [itemId, setItemId] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [prize, setPrize] = useState(0);
-  const [totalPrize, setTotalPrize] = useState(0);
+  const [stdQuantity, setStdQuantity] = useState(0);
+  const [quantity001, setQuantity001] = useState(0);
+  const [quantity002, setQuantity002] = useState(0);
+  const [quantity003, setQuantity003] = useState(0);
+  const [quantity004, setQuantity004] = useState(0);
+  const [quantity005, setQuantity005] = useState(0);
   const [selectedItems, setSelectedItems] = useState([]);
   const [showTable, setShowTable] = useState(false);
+  const [itemQuantities, setItemQuantities] = useState({});
 
-  const options = [
-    { label: "abc", value: 1 },
-    { label: "cde", value: 2 },
-    { label: "fgh", value: 3 },
-    { label: "hij", value: 4 },
-    { label: "jlk", value: 5 },
-    { label: "mno", value: 6 },
-    { label: "pqr", value: 7 },
-    { label: "stu", value: 8 },
+
+  const handleTransportSelect = (option) => {
+    setSelectedSubItem(option);
+  };
+
+  const itemsForThreeWheelers = [
+    { itemId: 1, itemName: "RoadLink Connect", itemPrice: 350 },
+    { itemId: 2, itemName: "NexusDrive", itemPrice: 350 },
+    { itemId: 3, itemName: "Linkway Connect", itemPrice: 350 },
+    { itemId: 4, itemName: "RouteHub", itemPrice: 350 },
+    // ... (other items for three-wheelers)
   ];
 
-  const items = [
-    { itemId: 1, itemName: "aa", itemPrice: 350, itemSubitem: "xyz" },
-    { itemId: 3, itemName: "cc", itemPrice: 350, itemSubitem: "xyz" },
-    { itemId: 4, itemName: "dd", itemPrice: 350, itemSubitem: "xyz" },
-    { itemId: 5, itemName: "ee", itemPrice: 350, itemSubitem: "xyz" },
-    { itemId: 2, itemName: "bb", itemPrice: 350, itemSubitem: "xyz" },
-    { itemId: 6, itemName: "ff", itemPrice: 350, itemSubitem: "xyz" },
-    { itemId: 7, itemName: "gg", itemPrice: 350, itemSubitem: "xyz" },
-    { itemId: 8, itemName: "hh", itemPrice: 350, itemSubitem: "xyz" },
-    { itemId: 9, itemName: "ii", itemPrice: 350, itemSubitem: "xyz" },
-    { itemId: 10, itemName: "jj", itemPrice: 350, itemSubitem: "xyz" },
+  const itemsForTwoWheelers = [
+    { itemId: 1, itemName: "MotoLink Connect", itemPrice: 350 },
+    { itemId: 2, itemName: "RideLink Hub", itemPrice: 350 },
+    { itemId: 3, itemName: "DuoTrail Link", itemPrice: 350 },
+    { itemId: 4, itemName: "TwoWheel Nexus", itemPrice: 350 },
+    // ... (other items for two-wheelers)
+  ];
+
+  const selectedItemsArray = selectedSubItem === "Three Wheelers" ? itemsForThreeWheelers : itemsForTwoWheelers;
+
+  const options = [
+    { label: "", value: 1 },
+    { label: "", value: 2 },
+    { label: "", value: 3 },
+    { label: "", value: 4 },
+    { label: "", value: 5 },
+    { label: "", value: 6 },
+    { label: "", value: 7 },
+    { label: "", value: 8 },
   ];
 
   const handleOptionButtonClick = () => {
     setDropdownOpen(!isDropdownOpen);
   };
 
-  const handleSubItemClick = (subItem) => {
+  const handleItemIdChange = (e, subItem) => {
     setSelectedSubItem(subItem);
-  };
-
-  const handleSelect = (e) => {
-    setValue(e.target.value);
-  };
-
-  const handleItemIdChange = (e) => {
     setItemId(e.target.value);
   };
 
-  const handleQuantityChange = (e) => {
-    setQuantity(e.target.value);
+  const handleQuantityChange = (e, type) => {
+    const value = parseInt(e.target.value) || 0;
+
+    switch (type) {
+      case "std":
+        setStdQuantity(value);
+        break;
+      case "001":
+        setQuantity001(value);
+        break;
+      case "002":
+        setQuantity002(value);
+        break;
+      case "003":
+        setQuantity003(value);
+        break;
+      case "004":
+        setQuantity004(value);
+        break;
+      case "005":
+        setQuantity005(value);
+        break;
+      default:
+        break;
+    }
   };
 
-  const handleItemClick = (selectedOption) => {
-    const selectedPrize = calculatePrize(selectedOption);
-    setPrize(selectedPrize);
-
-    const calculatedTotalPrize = selectedPrize * quantity;
-    setTotalPrize(calculatedTotalPrize);
-
-    setDropdownOpen(false);
-  };
-
-  const calculatePrize = (selectedOption) => {
-    return selectedOption * 10;
+  const calculateTotalPrice = () => {
+    // Assuming a fixed price of 300 for each quantity
+    const fixedPrice = 300;
+    return (
+      stdQuantity * fixedPrice +
+      quantity001 * fixedPrice +
+      quantity002 * fixedPrice +
+      quantity003 * fixedPrice +
+      quantity004 * fixedPrice +
+      quantity005 * fixedPrice
+    );
   };
 
   const handleCheckout = () => {
-    const newItem = {
-      itemId: itemId,
-      quantity: quantity,
-      subItem: selectedSubItem,
-      prize: prize,
-      isChecked: false,
-    };
-    setSelectedItems([...selectedItems, newItem]);
-    // Reset form fields
-    setItemId("");
-    setQuantity("");
-    setSelectedSubItem(null);
-    setValue("");
-    setPrize(0);
-    setTotalPrize(0);
-
-    // Set showTable to true when checking out
-    setShowTable(true);
-  };
-
-  const handleCheckboxChange = (index) => {
-    const updatedItems = [...selectedItems];
-    updatedItems[index].isChecked = !updatedItems[index].isChecked;
-
-    const updatedTotalPrize = updatedItems.reduce(
-      (total, item) =>
-        total + (item.isChecked ? item.prize * item.quantity : 0),
-      0
-    );
-
-    setTotalPrize(updatedTotalPrize);
-    setSelectedItems(updatedItems);
+    const selectedItem = selectedItemsArray.find(item => item.itemId === parseInt(itemId));
+    if (selectedItem) {
+      const newItem = {
+        itemId: selectedSubItem,
+        stdQuantity: selectedItem.stdQuantity,
+        quantity001: selectedItem.quantity001,
+        quantity002: selectedItem.quantity002,
+        quantity003: selectedItem.quantity003,
+        quantity004: selectedItem.quantity004,
+        quantity005: selectedItem.quantity005,
+        totalPrize: calculateTotalPrice(selectedItem),
+        isChecked: false,
+      };
+      setSelectedItems([...selectedItems, newItem]);
+      setItemId("");
+      setStdQuantity(0);
+      setQuantity001(0);
+      setQuantity002(0);
+      setQuantity003(0);
+      setQuantity004(0);
+      setQuantity005(0);
+      setShowTable(true);
+    } else {
+      // Handle item not found
+      console.error("Item not found");
+    }
   };
 
   return (
@@ -117,38 +139,40 @@ const PrimaryItem = ({ isModalOpen, closeModel, productName, subParts }) => {
               <div className="flex justify-between border-b pb-8">
                 <h1 className="font-semibold text-3xl">{productName}</h1>
               </div>
-              <div className="flex mt-1">
+              <div className="flex mt-4">
                 <ul className="flex list-none p-0">
                   {subParts.map((subItem) => (
-                    <li
-                      key={subItem}
-                      onClick={() => handleSubItemClick(subItem)}
-                    >
-                      <a
-                        href="#_"
-                        className="relative inline-block text-lg group mx-2 mt-2"
+                    <li key={subItem} onClick={() => setSelectedSubItem(subItem)}>
+                      <button
+                        className={`${
+                          selectedSubItem === subItem ? "bg-indigo-500 text-white" : ""
+                        } px-4 py-2 border rounded`}
+                        onClick={(e) => handleItemIdChange(e, subItem)}
                       >
-                        <span className="relative z-10 block px-5 py-3 overflow-hidden  font-medium leading-tight text-gray-800 transition-colors duration-300 ease-out border-2 border-gray-900 rounded-lg group-hover:text-white">
-                          <span className="absolute inset-0 w-full h-full px-5 py-3  rounded-lg bg-gray-50"></span>
-                          <span className="absolute left-0 w-48 h-48 -ml-2 transition-all  duration-300 origin-top-right -rotate-90 -translate-x-full translate-y-12 bg-gray-900 group-hover:-rotate-180 ease"></span>
-                          <span className="relative">{subItem}</span>
-                        </span>
-                        <span
-                          className="absolute bottom-0 right-0 w-full h-12 -mb-1 -mr-1 transition-all duration-200 ease-linear bg-gray-900 rounded-lg group-hover:mb-0 group-hover:mr-0"
-                          data-rounded="rounded-lg"
-                        ></span>
-                      </a>
+                        {subItem}
+                      </button>
                     </li>
                   ))}
+                  {subOptions &&
+                    subOptions.map((subOption) => (
+                      <li key={subOption} onClick={() => setSelectedSubItem(subOption)}>
+                        <button
+                          className={`${
+                            selectedSubItem === subOption ? "bg-indigo-500 text-white" : ""
+                          } px-4 py-2 border rounded ml-5`}
+                          onClick={(e) => handleItemIdChange(e, subOption)}
+                        >
+                          {subOption}
+                        </button>
+                      </li>
+                    ))}
                 </ul>
-              </div>
-              <div className="flex items-center mt-6 ">
-                <div className="flex items-center">
+                <div className="flex items-center ml-24 text-xl">
                   <label
                     htmlFor="itemId"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-lg font-medium text-gray-700"
                   >
-                    Item ID:
+                    Maco No:
                   </label>
                   <input
                     type="text"
@@ -156,75 +180,16 @@ const PrimaryItem = ({ isModalOpen, closeModel, productName, subParts }) => {
                     name="itemId"
                     value={itemId}
                     onChange={handleItemIdChange}
-                    className="ml-1 border border-gray-300 rounded-md flex w-[50%]"
+                    className="ml-1 border border-gray-300 rounded-md flex w-[60%]"
                   />
                 </div>
-                <div className="flex items-center">
-                  <label
-                    htmlFor="quantity"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Quantity:
-                  </label>
-                  <input
-                    type="number"
-                    id="quantity"
-                    name="quantity"
-                    value={quantity}
-                    onChange={handleQuantityChange}
-                    className="ml-1 border border-gray-300 rounded-md flex w-[50%]"
-                  />
-                </div>
-                <div className="flex items-center">
-                  <h4 className="mr-2 ml-[-20%]">Select Sub Group</h4>
-                  <select
-                    className="form-select bg-white-100 rounded-md border-solid border-2 border-black-5000 "
-                    onChange={handleSelect}
-                    value={value}
-                  >
-                    {options.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="flex items-center">
-                  <p>Prize: Rs {prize}</p>
-                </div>
-                <div className="flex items-center ml-8">
-                  <p>Total Prize: Rs {totalPrize}</p>
-                </div>
-                {isDropdownOpen && (
-                  <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-                    <div
-                      className="py-1"
-                      role="menu"
-                      aria-orientation="vertical"
-                      aria-labelledby="options-menu"
-                    >
-                      {options.map((option) => (
-                        <button
-                          key={option.value}
-                          onClick={() => handleItemClick(option.value)}
-                          className="block px-4  text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                          role="menuitem"
-                        >
-                          {option.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
             <div id="summary" className="w-1/3 px-8 py-10">
-              <h1 className="font-semibold text-2xl border-b pb-8">
-                Order Summary
-              </h1>
-              <div className="border-t mt-8 flex">
+              <h1 className="font-semibold text-2xl border-b pb-12"></h1>
+              <div className="border-t mt-4 flex">
                 <button
-                  className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm mr-3 text-white uppercase w-full "
+                  className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm mr-3 text-white uppercase w-full"
                   onClick={handleCheckout}
                 >
                   Search
@@ -232,45 +197,88 @@ const PrimaryItem = ({ isModalOpen, closeModel, productName, subParts }) => {
                 <button
                   className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
                   onClick={closeModel}
+                  
                 >
-                  CheckOut
+                  Place Order
                 </button>
               </div>
             </div>
           </div>
           <div>
             {showTable && (
-              <div className="border-t mt-8 flex">
-                <table className="w-[90%] ml-[3%] border-collapse border border-gray-300">
+              <div className="border-t mt-2 flex">
+                <table className="w-[90%] ml-[%] border-collapse w-full">
                   <thead>
-                    <tr>
-                      <th className=""></th>
-                      <th className="border border-gray-300">SR No.</th>
-                      <th className="border border-gray-300">Item Id</th>
-                      <th className="border border-gray-300">Item Name</th>
-                      <th className="border border-gray-300">Prize</th>
+                    <tr className="bg-slate-400">
+                      <th className="px-8 py-2">Maco_No</th>
+                      <th className="px-4 py-2">Item_Id</th>
+                      <th className="px-4 py-2">Item Name</th>
+                      <th className="px-4 py-2">STD</th>
+                      <th className="px-4 py-2">001</th>
+                      <th className="px-4 py-2">002</th>
+                      <th className="px-4 py-2">003</th>
+                      <th className="px-4 py-2">004</th>
+                      <th className="px-4 py-2">005</th>
+                      <th className="px-4 py-2">Total Price</th>
+                      <th className="px-4 py-2"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    {items.map((item, index) => (
-                      <tr key={index}>
-                        <td className="">
+                    {selectedItemsArray.map((item, index) => (
+                      <tr className="border-b text-center" key={index}>
+                        <td className="px-4 py-2">{index + 1}</td>
+                        <td className="px-4 py-2">{item.itemId}</td>
+                        <td className="px-4 py-2">{item.itemName}</td>
+                        <td className="px-4 py-2">
                           <input
-                            type="checkbox"
-                            checked={item.isChecked || false}
-                            onChange={() => handleCheckboxChange(index)}
+                            type="text"
+                            value={stdQuantity}
+                            onChange={(e) => handleQuantityChange(e, "std")}
+                            className="border border-gray-300 rounded-md w-[45%]"
                           />
                         </td>
-                        <td className="border border-gray-300">{index + 1}</td>
-                        <td className="border border-gray-300">
-                          {item.itemId}
+                        <td className="px-4 py-2">
+                          <input
+                            type="text"
+                            value={quantity001}
+                            onChange={(e) => handleQuantityChange(e, "001")}
+                            className="border border-gray-300 rounded-md w-[45%]"
+                          />
                         </td>
-                        <td className="border border-gray-300">
-                          {item.itemName}
+                        <td className="px-4 py-2">
+                          <input
+                            type="text"
+                            value={quantity002}
+                            onChange={(e) => handleQuantityChange(e, "002")}
+                            className="border border-gray-300 rounded-md w-[45%]"
+                          />
                         </td>
-                        <td className="border border-gray-300">
-                          {item.itemPrice}
+                        <td className="px-4 py-2">
+                          <input
+                            type="text"
+                            value={quantity003}
+                            onChange={(e) => handleQuantityChange(e, "003")}
+                            className="border border-gray-300 rounded-md w-[45%]"
+                          />
                         </td>
+                        <td className="px-4 py-2">
+                          <input
+                            type="text"
+                            value={quantity004}
+                            onChange={(e) => handleQuantityChange(e, "004")}
+                            className="border border-gray-300 rounded-md w-[45%]"
+                          />
+                        </td>
+                        <td className="px-4 py-2">
+                          <input
+                            type="text"
+                            value={quantity005}
+                            onChange={(e) => handleQuantityChange(e, "005")}
+                            className="border border-gray-300 rounded-md w-[45%]"
+                          />
+                        </td>
+                        <td className="px-4 py-2">{calculateTotalPrice()}</td>
+                        <td className="px-4 py-2"></td>
                       </tr>
                     ))}
                   </tbody>
