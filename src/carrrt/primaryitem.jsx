@@ -20,19 +20,11 @@ const PrimaryItem = ({ isModalOpen, closeModel, productName, subParts, subOption
   };
 
   const itemsForThreeWheelers = [
-    { itemId: 1, itemName: "RoadLink Connect", itemPrice: 350 },
-    { itemId: 2, itemName: "NexusDrive", itemPrice: 350 },
-    { itemId: 3, itemName: "Linkway Connect", itemPrice: 350 },
-    { itemId: 4, itemName: "RouteHub", itemPrice: 350 },
-    // ... (other items for three-wheelers)
+    { itemId: 1, itemName: "RoadLink Connect", itemPrice: 300 },
   ];
 
   const itemsForTwoWheelers = [
-    { itemId: 1, itemName: "MotoLink Connect", itemPrice: 350 },
-    { itemId: 2, itemName: "RideLink Hub", itemPrice: 350 },
-    { itemId: 3, itemName: "DuoTrail Link", itemPrice: 350 },
-    { itemId: 4, itemName: "TwoWheel Nexus", itemPrice: 350 },
-    // ... (other items for two-wheelers)
+    { itemId: 1, itemName: "MotoLink Connect", itemPrice: 300 },
   ];
 
   const selectedItemsArray = selectedSubItem === "Three Wheelers" ? itemsForThreeWheelers : itemsForTwoWheelers;
@@ -83,6 +75,11 @@ const PrimaryItem = ({ isModalOpen, closeModel, productName, subParts, subOption
         break;
     }
   };
+  const totalqunatiy = () =>{
+    return(
+      stdQuantity+quantity001+quantity002+quantity003+quantity004+quantity005
+    );
+  }
 
   const calculateTotalPrice = () => {
     // Assuming a fixed price of 300 for each quantity
@@ -219,6 +216,8 @@ const PrimaryItem = ({ isModalOpen, closeModel, productName, subParts, subOption
                       <th className="px-4 py-2">003</th>
                       <th className="px-4 py-2">004</th>
                       <th className="px-4 py-2">005</th>
+                      <th className="px-4 py-2">Total Quantity</th>
+                      <th className="px-4 py-2">Rate</th>
                       <th className="px-4 py-2">Total Price</th>
                       <th className="px-4 py-2"></th>
                     </tr>
@@ -277,6 +276,8 @@ const PrimaryItem = ({ isModalOpen, closeModel, productName, subParts, subOption
                             className="border border-gray-300 rounded-md w-[45%]"
                           />
                         </td>
+                        <td className="px-4 py-2">{totalqunatiy()}</td>
+                        <td className="px-4 py-2">{item.itemPrice}</td>
                         <td className="px-4 py-2">{calculateTotalPrice()}</td>
                         <td className="px-4 py-2"></td>
                       </tr>
